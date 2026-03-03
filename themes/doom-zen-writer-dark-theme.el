@@ -53,8 +53,9 @@
 
   ((error   :underline `(:style wave :color ,error))
    (warning :underline `(:style wave :color ,warning))
-   (hl-sentence :foreground "#ffffff" :background bg)
+   (hl-sentence :foreground fg :background bg :extend t)
    (hl-line :background base8)
+
    ((line-number &override)              :foreground base5)
    ((line-number-current-line &override) :foreground base2)
    (mode-line :background modeline-bg :foreground modeline-fg
