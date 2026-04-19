@@ -64,3 +64,9 @@
 (package! org-superstar)
 (package! org-appear)
 (package! wc-mode)
+(package! ox-pandoc)
+
+;;; PAIR packages
+(package! org-special-block-extras)
+(package! org-transclusion)
+(package! exec-path-from-shell)
