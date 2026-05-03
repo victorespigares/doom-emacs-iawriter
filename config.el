@@ -61,32 +61,6 @@
       (run-with-idle-timer 2 nil #'exec-path-from-shell-initialize))))
 
 
-;;
-;; ─── HEADERS TÉCNICOS ─────────────────────────────────────────────────────────
-
-(defvar-local my/tech-header-cookies nil
-  "Cookies de face-remap para headers técnicos. Se limpian al re-aplicar.")
-
-(defun my/technical-apply-headers ()
-  (dolist (c my/tech-header-cookies)
-    (face-remap-remove-relative c))
-  (setq my/tech-header-cookies nil)
-  (cl-flet ((remap (face bg fg w)
-              (push (face-remap-add-relative
-                     face :background bg :foreground fg
-                     :weight w :slant 'normal :extend t)
-                    my/tech-header-cookies)))
-    (if my/theme-dark-p
-        (progn                              ; dark → bg blanco, texto negro
-          (remap 'org-level-1 "#ffffff" "#000000" 'bold)
-          (remap 'org-level-2 "#f0f0f0" "#111111" 'bold)
-          (remap 'org-level-3 "#e0e0e0" "#222222" 'bold)
-          (remap 'org-level-4 "#d0d0d0" "#333333" 'normal))
-      (progn                                ; light → bg negro, texto blanco
-        (remap 'org-level-1 "#0d0d0d" "#ffffff" 'bold)
-        (remap 'org-level-2 "#1f1f1f" "#f0f0f0" 'bold)
-        (remap 'org-level-3 "#2e2e2e" "#e0e0e0" 'bold)
-        (remap 'org-level-4 "#3d3d3d" "#d0d0d0" 'normal)))))
 
 ;;
 ;; ─── MODE FUNCTIONS ───────────────────────────────────────────────────────────
@@ -140,7 +114,7 @@
   (setq-local org-hide-leading-stars nil)
   (when (bound-and-true-p org-indent-mode)
     (org-indent-mode -1))
-  (my/technical-apply-headers)
+  (pair/apply-headers)
   (my/org-pair-font-lock)
   ;; FIX: overlays diferidos — no bloquean la apertura del buffer
   (run-with-idle-timer 0.5 nil
@@ -330,8 +304,8 @@
   (dolist (buf (buffer-list))
     (with-current-buffer buf
       (when (and (derived-mode-p 'org-mode)
-                 (local-variable-p 'my/tech-header-cookies))
-        (my/technical-apply-headers)
+                 (local-variable-p 'pair/header-cookies))
+        (pair/apply-headers)
         (my/org-pair-apply-overlays)
         (pair/add-transclusion-bg)))))
 
