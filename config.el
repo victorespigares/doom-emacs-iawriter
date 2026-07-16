@@ -104,13 +104,13 @@
 (defun my/technical-org-mode ()
   "Modo técnico: PAIR, LaTeX, exportación."
   (unless (featurep 'pair-docs-init)
-    (load! "pair-docs/init-pair" "/Users/kr0n/Projects/Working/PAIR Protocol")
+    (load! "pair-docs/init-pair" "/Users/kr0n/Projects/Working/PAIR/ORG")
     (provide 'pair-docs-init))
   (olivetti-mode -1)
   (visual-line-mode 1)
   (display-line-numbers-mode 1)
   (wc-mode -1)
-  (setq-local header-line-format nil)
+  (pair/setup-header-line)
   (setq-local org-hide-leading-stars nil)
   (when (bound-and-true-p org-indent-mode)
     (org-indent-mode -1))
@@ -136,7 +136,7 @@
   "Directorios que usan modo escritura/novela.")
 
 (defvar my/technical-org-dirs
-  (list (expand-file-name "/Users/kr0n/Projects/Working/PAIR Protocol/"))
+  (list (expand-file-name "/Users/kr0n/Projects/Working/PAIR/ORG/"))
   "Directorios que usan modo técnico.")
 
 (defun my/org-mode-dispatch ()
